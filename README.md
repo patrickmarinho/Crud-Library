@@ -38,11 +38,11 @@ git clone https://github.com/patrickmarinho/CrudLibrary.git
 The API provides the following endpoints:
 
 ```markdown
-GET/book - Retrieve a list of all data.
+GET/book - Retrieve a list of all books.
 
-POST/book - Register a new data.
+POST/book - Register a new book.
 
-PUT/book/{id} - Alter data.
+PUT/book/{id} - Alter book.
 
-DELETE/book/{id} - Delete data.
+DELETE/book/{id} - Delete book.
 ```

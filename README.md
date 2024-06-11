@@ -21,7 +21,7 @@ This repository aims to learn how to build APIs using Java Spring.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/patrickmarinho/CrudLibrary.git
+git clone https://github.com/patrickmarinho/Crud-Library.git
 ```
 
 2. Install dependencies with Maven

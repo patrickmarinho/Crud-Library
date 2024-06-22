@@ -3,7 +3,6 @@ package com.example.crudlibary.service;
 import com.example.crudlibary.domain.entity.Book;
 import com.example.crudlibary.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +18,11 @@ public class BookService {
         return repository.findAll();
     }
 
+    //GET
+    public List<Book> getBookByTitle(String title){
+        return repository.findBookByTitle(title);
+    }
+
     //POST
     public List<Book> saveBook(Book book){
         Optional<Book> existingBookOptional = repository.findByTitle(book.getTitle());
@@ -32,7 +36,6 @@ public class BookService {
     //PUT
     public List<Book> updateBook(String id, Book book) {
        Optional<Book> existingBookOptional = repository.findById(id);
-
         if (existingBookOptional.isPresent()) {
             Book existingBook = existingBookOptional.get();
             existingBook.setTitle(book.getTitle());

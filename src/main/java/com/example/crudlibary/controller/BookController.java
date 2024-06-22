@@ -12,15 +12,20 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/library")
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
-    @GetMapping()
+    @GetMapping("/books")
     public List<Book> getAllBooks(){
         return bookService.getBooks();
+    }
+
+    @GetMapping("/book/{title}")
+    public List<Book> getBookByTitle(@PathVariable String title){
+        return bookService.getBookByTitle(title);
     }
 
     @PostMapping()

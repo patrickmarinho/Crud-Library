@@ -1,6 +1,8 @@
 package com.example.crudlibary.service;
 
 import com.example.crudlibary.domain.entity.Book;
+import com.example.crudlibary.exceptions.BookAlreadyRegisteredException;
+import com.example.crudlibary.exceptions.BookNotFoundException;
 import com.example.crudlibary.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,22 +22,31 @@ public class BookService {
 
     //GET
     public List<Book> getBookByTitle(String title){
-        return repository.findBookByTitle(title);
+
+        if(repository.findBookByTitle(title).isEmpty()){
+            throw new BookNotFoundException();
+        }else{
+            return repository.findBookByTitle(title);
+        }
     }
 
     //POST
     public List<Book> saveBook(Book book){
         Optional<Book> existingBookOptional = repository.findByTitle(book.getTitle());
+
         if (existingBookOptional.isPresent()) {
-            throw new IllegalArgumentException("Livro com o título fornecido já consta no sistema.");
+            throw new BookAlreadyRegisteredException();
         } else {
             repository.save(book);
         }
+
         return getBooks();
     }
+
     //PUT
     public List<Book> updateBook(String id, Book book) {
        Optional<Book> existingBookOptional = repository.findById(id);
+
         if (existingBookOptional.isPresent()) {
             Book existingBook = existingBookOptional.get();
             existingBook.setTitle(book.getTitle());
@@ -44,15 +55,20 @@ public class BookService {
             existingBook.setPublication_year(book.getPublication_year());
             repository.save(existingBook);
         } else {
-            throw new IllegalArgumentException("Livro com o ID fornecido não encontrado.");
+            throw new BookNotFoundException();
         }
+
         return getBooks();
     }
 
 
     //DELETE
     public List<Book> deleteBook(String id){
-        repository.deleteById(id);
+        if(repository.findById(id).isEmpty()){
+            throw new BookNotFoundException();
+        }else{
+            repository.deleteById(id);
+            }
         return getBooks();
     }
 }

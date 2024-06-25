@@ -1,5 +1,6 @@
 package com.example.crudlibary.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class Book {
     @Id @NotNull @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

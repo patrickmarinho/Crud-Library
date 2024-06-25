@@ -15,6 +15,7 @@ public class BookService {
     @Autowired
     private BookRepository repository;
 
+
     //GET
     public List<Book> getBooks(){
         return repository.findAll();
@@ -39,7 +40,6 @@ public class BookService {
         } else {
             repository.save(book);
         }
-
         return getBooks();
     }
 

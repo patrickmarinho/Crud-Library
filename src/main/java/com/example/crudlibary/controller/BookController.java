@@ -3,6 +3,7 @@ package com.example.crudlibary.controller;
 import com.example.crudlibary.domain.entity.Book;
 import com.example.crudlibary.repository.BookRepository;
 import com.example.crudlibary.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

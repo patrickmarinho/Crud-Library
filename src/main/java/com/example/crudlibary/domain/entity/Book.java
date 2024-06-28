@@ -1,5 +1,6 @@
 package com.example.crudlibary.domain.entity;
 
+import com.example.crudlibary.dto.BookDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -29,4 +30,12 @@ public class Book {
 
     @NotNull
     private Integer publication_year;
+
+    public Book(BookDTO bookDTO) {
+        this.title = bookDTO.title();
+        this.author = bookDTO.author();
+        this.category = bookDTO.category();
+        this.publication_year = bookDTO.publication_year();
+    }
+
 }

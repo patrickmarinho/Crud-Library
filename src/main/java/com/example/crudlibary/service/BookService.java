@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class BookService {
+
     @Autowired
     private BookRepository repository;
 
@@ -32,7 +33,7 @@ public class BookService {
     }
 
     //POST
-    public List<Book> saveBook(Book book){
+    public Book saveBook(Book book){
         Optional<Book> existingBookOptional = repository.findByTitle(book.getTitle());
 
         if (existingBookOptional.isPresent()) {
@@ -40,11 +41,11 @@ public class BookService {
         } else {
             repository.save(book);
         }
-        return getBooks();
+        return book;
     }
 
     //PUT
-    public List<Book> updateBook(String id, Book book) {
+    public Book updateBook(String id, Book book) {
        Optional<Book> existingBookOptional = repository.findById(id);
 
         if (existingBookOptional.isPresent()) {
@@ -58,7 +59,7 @@ public class BookService {
             throw new BookNotFoundException();
         }
 
-        return getBooks();
+        return book;
     }
 
 

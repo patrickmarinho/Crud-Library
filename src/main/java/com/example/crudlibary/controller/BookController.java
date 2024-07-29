@@ -30,12 +30,12 @@ public class BookController {
     }
 
     @PostMapping()
-    public List<Book> registerBook(@RequestBody Book book) {
+    public Book registerBook(@RequestBody Book book) {
         return  bookService.saveBook(book);
     }
 
     @PutMapping("/{id}")
-    public List<Book> updateBook(@PathVariable String id, @RequestBody Book book){
+    public Book updateBook(@PathVariable String id, @RequestBody Book book){
         return bookService.updateBook(id, book);
     }
 

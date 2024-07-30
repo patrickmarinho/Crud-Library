@@ -14,8 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 
 //@DataJpaTest
@@ -85,22 +86,36 @@ class BookServiceTest {
     @DisplayName("Should update the book in the database")
     void updateBook() {
         //Arrange
+        Book existingBook = new Book("1","The Silmarillion","J.R.R. Tolkien","Fantasy",1977);
+        Book updatedBook = new Book("1", "The Lord Of The Rings", "J.R.R Tolkien", "Fantasy",1954);
+        doReturn(Optional.of(existingBook)).when(bookRepository).findById(existingBook.getId());
+        doReturn(existingBook).when(bookRepository).save(existingBook);
 
         //Act
+        Book updateBook = bookService.updateBook(existingBook.getId(), updatedBook);
 
         //Assert
-
+        Assertions.assertNotNull(updateBook);
+        Assertions.assertEquals(updatedBook.getTitle(), existingBook.getTitle());
+        Assertions.assertEquals(updatedBook.getAuthor(), existingBook.getAuthor());
+        Assertions.assertEquals(updatedBook.getCategory(), existingBook.getCategory());
+        Assertions.assertEquals(updatedBook.getPublication_year(), existingBook.getPublication_year());
+        verify(bookRepository).save(existingBook);
     }
 
     @Test
     @DisplayName("Should delete the book from the database")
     void deleteBook() {
         //Arrange
-
+        Book book = new Book("1","The Silmarillion","J.R.R. Tolkien","Fantasy",1977);
+        doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
+        doNothing().when(bookRepository).deleteById(book.getId());
         //Act
-
+        List <Book> deleteBook = bookService.deleteBook(book.getId());
         //Assert
-
+        Assertions.assertNotNull(deleteBook);
+        Assertions.assertFalse(deleteBook.contains(book));
+        verify(bookRepository, times(1)).deleteById(book.getId());
     }
 
 }
